@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const SectionContainer = styled.main`
   width: 100%;
-  background-color: darksalmon;
   margin: 0 auto;
   margin-top: 20px;
   display: flex;
+  gap: 65px;
 
   @media (min-width: 700px) {
     height: 735px;
@@ -15,7 +15,7 @@ export const SectionContainer = styled.main`
 
   @media (max-width: 699px) {
     height: 346px;
-    flex-direction: column;
+    flex-direction: column;    
   }  
 
   @media (max-width: 540px) {
@@ -26,12 +26,22 @@ export const SectionContainer = styled.main`
 `;
 
 export const ProductsList = styled.ul`
-  background-color: azure;
   width: 100%;
-  height: 351px;
+  display: flex;
+  gap: 12px;
   
-  @media (min-width: 700px) {
+  
+  @media (min-width: 1354px) {
+    justify-content: space-between;
     max-width: 940px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 1353px) {
+    justify-content: space-around;
+    padding: 0 1vw;
+    flex-wrap: wrap;
+    overflow-x: scroll;
   }
 
   @media (max-width: 699px) {
@@ -41,7 +51,6 @@ export const ProductsList = styled.ul`
 `;
 
 export const AsideContent = styled.aside`
-  background-color: orange;
   width: 100%;
   height: 351px;
   
@@ -50,6 +59,19 @@ export const AsideContent = styled.aside`
   }
   @media (max-width: 699px) {
     padding: 0 2vw;
-  }
-  
+  }  
 `;
+
+export const CartTitleBG = styled.div`
+  width: 100%;
+  height: 65px;
+  background-color: var(--color-primary);
+  border: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding: 22px;
+`
+
+
+
+
