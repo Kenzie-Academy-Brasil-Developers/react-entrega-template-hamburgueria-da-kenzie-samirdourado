@@ -14,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
         --grey-50:  #828282;
         --grey-20: #E0E0E0;
         --grey-0:  #F5F5F5;
+        --white: #FFFFFF;
 
         --negative:#E60000;
         --warning: #FFCD07;
@@ -38,3 +39,4 @@ export const GlobalStyle = createGlobalStyle`
         list-style: none;
     }
 `
+
