@@ -5,39 +5,49 @@ import { GlobalStyle } from '../../styles/global';
 import { CardFoodCategory, CardFoodPrice, CartAddTitle, CartTitle, TitleAll, TitleCart, TotalTile, TotalValue } from '../../styles/typography';
 import { ClearAllBtn, GenericButton, RemoveButton } from '../button';
 import { DataCardBg, FigureCard, FoodCard, FoodImage } from '../cardFood';
-import { Checkout, DataCart, FigureCart, FoodCart, FoodCartHolder, FoodCartWrapper, FoodImageCart } from '../cartCard';
+import { CartTypeAmount, Checkout, DataCart, FigureCart, FoodCart, FoodCartHolder, FoodCartWrapper, FoodImageCart } from '../cartCard';
 import { AsideContent, CartTitleBG, ProductsList, SectionContainer } from '../contentContainer';
+import { CounterCart } from '../counter/indexC';
+
 import { CartEmptyBg } from '../emptyCart';
 
 
 export function ContentArea({
-    products, setProducts, currentSale, addProductToCart, removeProductFromCart, calculator}) {
-    // console.log(products)
-    const [loading, setLoading] = useState(true)
+    products,
+    setProducts,
+    currentSale,
+    addProductToCart,
+    removeProductFromCart,
+    filteredProducts,
+    calculator,
+    search,
+    removeAllProductsFromCart,
+    count,
+    counterAdd,
+    counterSub    
+}) {
 
     useEffect(() => {
         async function getProducts() {
           try {
-            const response = await api.get("products")            
+            const response = await api.get("products")
             setProducts(response.data)
           } catch (error) {
             console.log(error)
-          } finally {
-            setLoading(false)
-          }
+          } 
         }
         getProducts()
-      }, [])
+    }, [])
     
     
     return(
         <SectionContainer>
-            <GlobalStyle/>
             
-            {loading && <div>Carregando...</div>}
-            <ProductsList>
+            <GlobalStyle/>
 
-                {products.map((data) =>
+            { search.length > 0 ?  (
+                <ProductsList>
+                    {filteredProducts.map((data) =>
                     <FoodCard key={data.id}>                     
                     <FigureCard>
                         <FoodImage src={data.img} alt={data.name}/>
@@ -45,25 +55,43 @@ export function ContentArea({
                     <DataCardBg>
                         <TitleAll>{data.name}</TitleAll>
                         <CardFoodCategory>{data.category}</CardFoodCategory>
-                        <CardFoodPrice>R$ {data.price}</CardFoodPrice>
+                        <CardFoodPrice>R$ {data.price.toFixed(2)}</CardFoodPrice>
                         <GenericButton  onClick={() => addProductToCart(data)}>Adicionar</GenericButton>
                     </DataCardBg>
-                </FoodCard>
-                )}
+                    </FoodCard>
+                    )}
+                </ProductsList> 
+            ) : (
+                <ProductsList>
+                    {products.map((data) =>
+                    <FoodCard key={data.id}>                     
+                    <FigureCard>
+                        <FoodImage src={data.img} alt={data.name}/>
+                    </FigureCard>
+                    <DataCardBg>
+                        <TitleAll>{data.name}</TitleAll>
+                        <CardFoodCategory>{data.category}</CardFoodCategory>
+                        <CardFoodPrice>R$ {data.price.toFixed(2)}</CardFoodPrice>
+                        <GenericButton  onClick={() => addProductToCart(data)}>Adicionar</GenericButton>
+                    </DataCardBg>
+                    </FoodCard>
+                    )}
+                </ProductsList>
+            )
+        }
 
-            </ProductsList>
+        <AsideContent>
+            <CartTitleBG>
+                <CartTitle>Carrinho de Compras</CartTitle>
+            </CartTitleBG>
 
-            <AsideContent>
-                <CartTitleBG>
-                    <CartTitle>Carrinho de Compras</CartTitle>
-                </CartTitleBG>
-
-                {currentSale.length === 0 ? 
+            {currentSale.length === 0 
+                ? (
                     <CartEmptyBg>
                         <TitleAll>Sua sacola está vazia</TitleAll>
                         <CartAddTitle>Adicione itens</CartAddTitle>
                     </CartEmptyBg>
-                :
+                ) : (
                 <>
                 <FoodCartHolder>
                 {currentSale.map((data) => 
@@ -72,17 +100,17 @@ export function ContentArea({
                             <FoodImageCart src={data.img} alt={data.name}/>
                         </FigureCart>
 
-                        <FoodCartWrapper>
-                        
+                        <FoodCartWrapper>                        
                             <DataCart>
                                 <TitleCart>{data.name}</TitleCart>
                                 <RemoveButton onClick={() => removeProductFromCart(data.id)}>Remover</RemoveButton>
                             </DataCart>
-                            <CardFoodCategory>{data.category}</CardFoodCategory>
-                        
-                    </FoodCartWrapper>
-                    
-                </FoodCart>
+                            <CartTypeAmount>
+                                <CardFoodCategory>{data.category}</CardFoodCategory>
+                                {/* <CounterCart data={data} count={count} counterAdd={counterAdd} counterSub={counterSub}/> */}
+                            </CartTypeAmount>
+                        </FoodCartWrapper>                    
+                    </FoodCart>
                     )}
                     
                 </FoodCartHolder>
@@ -90,17 +118,15 @@ export function ContentArea({
                 <Checkout>
                     <div>
                         <TotalTile>Total</TotalTile>
-                        <TotalValue>R$ {calculator},00</TotalValue>
+                        <TotalValue>R$ {calculator(currentSale).toFixed(2)}</TotalValue>
                     </div>
-                    <ClearAllBtn>Remover Todos</ClearAllBtn>
+                    <ClearAllBtn onClick={() => removeAllProductsFromCart()}>Remover Todos</ClearAllBtn>
                 </Checkout>
                 </>
-                 }
+                )
+            }                
+        </AsideContent>
 
-                 
-            </AsideContent>
-
-            
         </SectionContainer>
-    );
+    )
 }

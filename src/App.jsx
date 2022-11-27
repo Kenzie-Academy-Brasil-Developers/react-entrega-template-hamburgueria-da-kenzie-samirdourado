@@ -1,33 +1,44 @@
 import { useState, useEffect } from 'react'
-import { GlobalStyle } from './styles/global';
-import { HeaderArea } from './components/header';
-import { ContentArea } from './components/contentAll';
-import { toast, ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import { GlobalStyle } from './styles/global'
+import { HeaderArea } from './components/header'
+import { ContentArea } from './components/contentAll'
+import { toast, ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
   const localStorageProducts = localStorage.getItem(`@BurguerKenzie`)
   const [products, setProducts] = useState([]);
   const [currentSale, setCurrentSale] = useState(localStorageProducts ? JSON.parse(localStorageProducts) : [])
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [cartTotal, setCartTotal] = useState(0)
+  const [search, setSearch] = useState('');
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
     localStorage.setItem(`@BurguerKenzie`, JSON.stringify(currentSale))
   }, [currentSale])
 
-  // function SearchWrite(evt) {
-  //   const filtredList = products.filter(console.log(evt.target.value))    
-  //   console.log(filtredList)
-  //   setFilteredProducts(filtredList)
-  // }
-  // SearchWrite()
+  useEffect(() => {
+    if (search.length) {
+      setFilteredProducts(products.filter(product => 
+        product.name.toLowerCase().includes(search)
+        || product.category.toLowerCase().includes(search)
+      ))
+    }
+  }, [search])
 
-  function calculator() {
-    const operator = currentSale.reduce((acc, act) => { 
-      return acc + act.value
-    },0)
-    return operator
+  function counterAdd(value) {
+    setCount(count + 1)
+  }
+
+  function counterSub(value) {
+    if(count > 0){
+      setCount(count - 1)
+    }
+  }
+
+  function calculator(prices) {
+    const total = prices.map(data => (data.price))
+    return total.reduce((acc, act) => {return acc + act}, 0) 
   }
 
   function addProductToCart(productData) {
@@ -35,25 +46,31 @@ function App() {
       setCurrentSale([...currentSale, productData])
       toast.success(`Produto adicionado`)
     } else {
-      toast.error(`Produto já adicionado`)
+      toast.warn(`Produto já adicionado`)
     }
   }
 
   function removeProductFromCart(productID) {
     const newList = currentSale.filter((data) => data.id !== productID)
     setCurrentSale(newList)
-    toast.warn(`Produto removido`)
+    toast.error(`Produto removido.`)
   }
-   
+
+  function removeAllProductsFromCart(i) {
+    const newList = currentSale.filter((data) => data === i)
+    setCurrentSale(newList)
+    toast.error(`Carrinho vazio, adicione nos produtos para continuar.`)
+  }
 
   return (
     <div>
       <HeaderArea
         products={products}
+        setProducts={setProducts}
         filteredProducts={filteredProducts}
-        setFilteredProducts={setFilteredProducts}
-        // SearchWrite={SearchWrite}
-        calculator={calculator}
+        // setFilteredProducts={setFilteredProducts}
+        search={search}
+        setSearch={setSearch}
       />      
 
       <ContentArea 
@@ -63,22 +80,31 @@ function App() {
         setCurrentSale={setCurrentSale}
         addProductToCart={addProductToCart}
         removeProductFromCart={removeProductFromCart}
+        filteredProducts={filteredProducts}
+        search={search}
+        calculator={calculator}
+        removeAllProductsFromCart={removeAllProductsFromCart}
+        count={count}
+        counterAdd={counterAdd}
+        counterSub={counterSub}
       />
       
       <GlobalStyle/>
-      
+
       <ToastContainer
-        position="bottom-right"
-        autoClose={2500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        />
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { Header, HeaderContainer, FigureLogo, SearchArea } from "./style.js";
 import { SearchField } from "../input";
 import { GenericButton } from "../button";
 
-export function HeaderArea({products, filteredProducts, setFilteredProducts, SearchWrite}) {
+export function HeaderArea({search, setSearch}) {
   return (
     <Header>
       <GlobalStyle />
@@ -12,12 +12,14 @@ export function HeaderArea({products, filteredProducts, setFilteredProducts, Sea
         <FigureLogo>
           <img src={Logo} alt="Logo"></img>
         </FigureLogo>
-        <SearchArea>
-      
-          <SearchField placeholder="Digitar Pesquisa" onChange={(evt) => SearchWrite(evt.target.value)}/>
+        <SearchArea>          
+          <SearchField 
+            placeholder="Digitar Pesquisa" 
+            value={search} 
+            onChange={(evt) => setSearch(evt.target.value.toLowerCase()) }/>
           <GenericButton>Pesquisar</GenericButton>
         </SearchArea>
       </HeaderContainer>
     </Header>
-  );
+  )
 }

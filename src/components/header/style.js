@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Header = styled.header`
   width: 100%;
+  min-width: 300px;
   height: 80px;
   background-color: var(--grey-0);
   display: flex;
@@ -40,7 +41,7 @@ export const FigureLogo = styled.figure`
 export const SearchArea = styled.div`
   width: 100%;
   max-width: 365px;
-  /* min-width: 300px; */
+  min-width: 290px;
   height: 60px;
   background-color: var(--grey-0);
   border: 2px solid var(--grey-20);
