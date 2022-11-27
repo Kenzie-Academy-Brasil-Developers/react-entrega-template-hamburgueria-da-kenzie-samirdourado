@@ -63,6 +63,7 @@ function App() {
   }
 
   return (
+    <>
     <div>
       <HeaderArea
         products={products}
@@ -91,6 +92,7 @@ function App() {
       
       <GlobalStyle/>
 
+      <div>
       <ToastContainer
       position="top-right"
       autoClose={5000}
@@ -105,8 +107,9 @@ function App() {
       />
       {/* Same as */}
       <ToastContainer />
+      </div>
     </div>
+    </>
   )
 }
-
 export default App

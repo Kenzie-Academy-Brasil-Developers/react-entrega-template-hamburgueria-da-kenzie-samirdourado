@@ -2,6 +2,7 @@ import { CounterDivBg } from "."
 import { CounterBtn } from "../button"
 import { TotalValue } from "../../styles/typography"
 
+
 export function CounterCart({count, counterAdd, counterSub, data}) {
     return(
         <CounterDivBg>

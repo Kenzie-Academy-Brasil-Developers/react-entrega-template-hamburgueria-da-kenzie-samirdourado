@@ -1,9 +1,6 @@
-import { createGlobalStyle} from "styled-components"
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
-
-    
-
     :root{
         --font-family-1: font-family: 'Inter', sans-serif;
         --color-primary: #27AE60;
@@ -50,4 +47,3 @@ export const GlobalStyle = createGlobalStyle`
         }    
     }
 `
-
