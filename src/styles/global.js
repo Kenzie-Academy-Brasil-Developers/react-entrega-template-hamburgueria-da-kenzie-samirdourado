@@ -29,7 +29,7 @@ export const GlobalStyle = createGlobalStyle`
         --headline: 1rem; /*16px regular*/
         --body: 0.875rem; /*14px regular*/
         --caption: 0.75rem; /*12px regular*/
-
+        
     }
 
     * {
@@ -37,6 +37,17 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
         list-style: none;
+    }
+
+    @keyframes modalAnimation {
+        0%{
+            opacity: 0;
+            transform: translateX(-70%);
+        }
+        100%{
+            opacity: 1;
+            transform: translateX(0);
+        }    
     }
 `
 

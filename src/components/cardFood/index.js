@@ -11,6 +11,10 @@ export const FoodCard = styled.li`
     border: solid 2px var(--grey-50);
     display: flex;
     flex-direction: column;
+    
+    &&:hover {
+        border: solid 2px var(--color-primary-50);
+    }
 `
 
 export const FigureCard = styled.figure`
@@ -20,12 +24,16 @@ export const FigureCard = styled.figure`
     display: flex;
     justify-content: center;
     align-items: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 `
 
 export const FoodImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: contain;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 `
 
 export const DataCardBg = styled.div`

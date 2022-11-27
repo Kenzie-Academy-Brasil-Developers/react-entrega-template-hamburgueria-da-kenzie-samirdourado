@@ -43,3 +43,22 @@ export const RemoveButton = styled.button`
     font-weight: 500;
     cursor: pointer;    
 `
+
+export const CounterBtn = styled.button`
+    width: 20px;
+    height: 20px;
+    max-width: 25px;
+    max-height: 25px;
+    background-color: transparent;
+    border: solid 2px;
+    border-radius: 40px;
+    color: var(--grey-100);
+    font-family: 'Inter';
+    font-size: var(--heading4);
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;    
+    outline: none;
+`
