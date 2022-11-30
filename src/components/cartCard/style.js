@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const FoodCartHolder = styled.ul`
     width: 100%;
     min-width: 300px;
-    height: 323px;
+    max-height: 323px;
     padding: 20px 10px;
     display: flex;
     flex-direction: column;
@@ -92,9 +92,12 @@ export const Checkout = styled.div`
     justify-content: space-evenly;
     align-items: center;
     padding: 0 10px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     & > div {
         width: 100%;
         display: flex;
         justify-content: space-between;
     } 
 `
+

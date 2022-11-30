@@ -29,9 +29,9 @@ export const FigureCard = styled.figure`
 `
 
 export const FoodImage = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 `
@@ -44,5 +44,7 @@ export const DataCardBg = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 `
 

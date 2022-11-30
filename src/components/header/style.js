@@ -38,7 +38,7 @@ export const FigureLogo = styled.figure`
   height: 23px;
 `;
 
-export const SearchArea = styled.div`
+export const SearchArea = styled.form`
   width: 100%;
   max-width: 365px;
   min-width: 290px;

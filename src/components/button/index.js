@@ -12,7 +12,7 @@ export const GenericButton = styled.button`
     font-family: 'Inter';
     font-size: var(--heading4);
     font-weight: 500;
-    cursor: pointer;    
+    cursor: pointer;
 `
 
 export const ClearAllBtn = styled.button`

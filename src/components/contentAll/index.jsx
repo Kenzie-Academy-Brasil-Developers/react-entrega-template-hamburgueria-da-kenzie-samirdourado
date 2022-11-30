@@ -1,16 +1,14 @@
-import { useState, useEffect } from 'react'
-import { api } from '../../services/api'
-
-import { GlobalStyle } from '../../styles/global';
-import { CardFoodCategory, CardFoodPrice, CartAddTitle, CartTitle, TitleAll, TitleCart, TotalTile, TotalValue } from '../../styles/typography';
-import { ClearAllBtn, GenericButton, RemoveButton } from '../button';
-import { DataCardBg, FigureCard, FoodCard, FoodImage } from '../cardFood';
-import { CartTypeAmount, Checkout, DataCart, FigureCart, FoodCart, FoodCartHolder, FoodCartWrapper, FoodImageCart } from '../cartCard';
-import { AsideContent, CartTitleBG, ProductsList, SectionContainer } from '../contentContainer';
-import { CounterCart } from '../counter/indexC';
-
-import { CartEmptyBg } from '../emptyCart';
-
+import { useEffect } from "react"
+import { api } from "../../services/api"
+import { GlobalStyle } from "../../styles/global"
+import { CartAddTitle, CartTitle, TitleAll, TotalTile, TotalValue } from "../../styles/typography"
+import { ClearAllBtn, } from "../button"
+import { Checkout, FoodCartHolder } from "../cartCard/style"
+import { AsideContent, CartTitleBG, ProductsList, SectionContainer } from "../contentContainer"
+import { FoodCardsMain } from "../cardFood/"
+import { CartEmptyBg } from "../emptyCart"
+import { FoodCardsFiltredMain } from "../cardFoodFiltred"
+import { FoodCardCart } from "../cartCard/index"
 
 export function ContentArea({
     products,
@@ -39,94 +37,56 @@ export function ContentArea({
         getProducts()
     }, [])
     
-    
     return(
-        <SectionContainer>
-            
+        <SectionContainer>            
             <GlobalStyle/>
 
             { search.length > 0 ?  (
                 <ProductsList>
-                    {filteredProducts.map((data) =>
-                    <FoodCard key={data.id}>                     
-                    <FigureCard>
-                        <FoodImage src={data.img} alt={data.name}/>
-                    </FigureCard>
-                    <DataCardBg>
-                        <TitleAll>{data.name}</TitleAll>
-                        <CardFoodCategory>{data.category}</CardFoodCategory>
-                        <CardFoodPrice>R$ {data.price.toFixed(2)}</CardFoodPrice>
-                        <GenericButton  onClick={() => addProductToCart(data)}>Adicionar</GenericButton>
-                    </DataCardBg>
-                    </FoodCard>
-                    )}
+                    <FoodCardsFiltredMain filteredProducts={filteredProducts} addProductToCart={addProductToCart}/>
                 </ProductsList> 
             ) : (
                 <ProductsList>
-                    {products.map((data) =>
-                    <FoodCard key={data.id}>                     
-                    <FigureCard>
-                        <FoodImage src={data.img} alt={data.name}/>
-                    </FigureCard>
-                    <DataCardBg>
-                        <TitleAll>{data.name}</TitleAll>
-                        <CardFoodCategory>{data.category}</CardFoodCategory>
-                        <CardFoodPrice>R$ {data.price.toFixed(2)}</CardFoodPrice>
-                        <GenericButton  onClick={() => addProductToCart(data)}>Adicionar</GenericButton>
-                    </DataCardBg>
-                    </FoodCard>
-                    )}
+                    <FoodCardsMain products={products} addProductToCart={addProductToCart}/>
                 </ProductsList>
             )
-        }
+            }
 
-        <AsideContent>
-            <CartTitleBG>
-                <CartTitle>Carrinho de Compras</CartTitle>
-            </CartTitleBG>
+            <AsideContent>
+                <CartTitleBG>
+                    <CartTitle>Carrinho de Compras</CartTitle>
+                </CartTitleBG>
 
-            {currentSale.length === 0 
-                ? (
-                    <CartEmptyBg>
-                        <TitleAll>Sua sacola está vazia</TitleAll>
-                        <CartAddTitle>Adicione itens</CartAddTitle>
-                    </CartEmptyBg>
-                ) : (
-                <>
-                <FoodCartHolder>
-                {currentSale.map((data) => 
-                    <FoodCart key={data.id}>
-                        <FigureCart>
-                            <FoodImageCart src={data.img} alt={data.name}/>
-                        </FigureCart>
+                {currentSale.length === 0
+                    ? (
+                        <CartEmptyBg>
+                            <TitleAll>Sua sacola está vazia</TitleAll>
+                            <CartAddTitle>Adicione itens</CartAddTitle>
+                        </CartEmptyBg>
+                    ) : (
+                    <>
+                    <FoodCartHolder>
+                        <FoodCardCart
+                            currentSale={currentSale}
+                            removeProductFromCart={removeProductFromCart}
+                            count={count}
+                            counterAdd={counterAdd}
+                            counterSub={counterSub}
+                            products={products}
+                        />                    
+                    </FoodCartHolder>
 
-                        <FoodCartWrapper>                        
-                            <DataCart>
-                                <TitleCart>{data.name}</TitleCart>
-                                <RemoveButton onClick={() => removeProductFromCart(data.id)}>Remover</RemoveButton>
-                            </DataCart>
-                            <CartTypeAmount>
-                                <CardFoodCategory>{data.category}</CardFoodCategory>
-                                {/* <CounterCart data={data} count={count} counterAdd={counterAdd} counterSub={counterSub}/> */}
-                            </CartTypeAmount>
-                        </FoodCartWrapper>                    
-                    </FoodCart>
-                    )}
-                    
-                </FoodCartHolder>
-
-                <Checkout>
-                    <div>
-                        <TotalTile>Total</TotalTile>
-                        <TotalValue>R$ {calculator(currentSale).toFixed(2)}</TotalValue>
-                    </div>
-                    <ClearAllBtn onClick={() => removeAllProductsFromCart()}>Remover Todos</ClearAllBtn>
-                </Checkout>
-                </>
-                )
-            }                
-        </AsideContent>
-
+                    <Checkout>
+                        <div>
+                            <TotalTile>Total</TotalTile>
+                            <TotalValue>R$ {calculator(currentSale).toFixed(2)}</TotalValue>
+                        </div>
+                        <ClearAllBtn onClick={() => removeAllProductsFromCart()}>Remover Todos</ClearAllBtn>
+                    </Checkout>
+                    </>
+                    )
+                }                
+            </AsideContent>
         </SectionContainer>
     )
 }

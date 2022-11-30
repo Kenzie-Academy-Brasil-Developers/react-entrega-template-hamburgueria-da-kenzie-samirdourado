@@ -8,4 +8,6 @@ export const CartEmptyBg = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 `

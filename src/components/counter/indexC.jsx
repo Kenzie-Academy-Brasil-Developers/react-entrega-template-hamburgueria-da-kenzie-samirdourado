@@ -3,13 +3,16 @@ import { CounterBtn } from "../button"
 import { TotalValue } from "../../styles/typography"
 
 
-export function CounterCart({count, counterAdd, counterSub, data}) {
+export function CounterCart({count, dataId, counterAdd, counterSub, currentSale}) {
     return(
         <CounterDivBg>
-            {console.log(data)}
-            <CounterBtn type="button" onClick={counterSub} >-</CounterBtn>            
-            <TotalValue>{count}</TotalValue>
-            <CounterBtn type="button" onClick={counterAdd} >+</CounterBtn>
+           
+            <CounterBtn type="button" onClick={() => counterSub(currentSale, dataId)} >-</CounterBtn>
+           
+                <TotalValue>{count}</TotalValue>
+           
+            <CounterBtn type="button" onClick={() => counterAdd(currentSale, dataId)} >+</CounterBtn>
+           
         </CounterDivBg>
     )
 }
